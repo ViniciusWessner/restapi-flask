@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_mongoengine import MongoEngine
 from mongoengine import NotUniqueError
@@ -37,7 +37,7 @@ class UserModel(db.Document):
 
 class Users(Resource):
     def get(self):
-        return {'message': 'user 1'}
+        return jsonify(UserModel.objects.all())
 
 
 class User(Resource):
@@ -80,9 +80,13 @@ class User(Resource):
         except NotUniqueError:
             return {"message": "Usuário ja existe"}, 400
 
-
     def get(self, cpf):
-        return {"message": "CPF"}
+        response = UserModel.objects(cpf=cpf)
+        
+        if response:
+            return jsonify(response)
+        else:
+            return {"message": "Usuário não encontrado"}, 404
 
 
 api.add_resource(Users, '/users')
