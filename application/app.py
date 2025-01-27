@@ -5,16 +5,32 @@ from mongoengine import NotUniqueError
 import re
 
 
-
-
 _user_parser = reqparse.RequestParser()
-_user_parser.add_argument('cpf', type=str, required=True, help="O campo CPF não pode ser vazio")
-_user_parser.add_argument('first_name', type=str, required=True, help="O campo firstName não pode ser vazio")
-_user_parser.add_argument('last_name', type=str, required=True, help="O campo lastName não pode ser vazio")
-_user_parser.add_argument('email', type=str, required=True, help="O campo email não pode ser vazio")
-_user_parser.add_argument('birth_Date', type=str, required=True, help="O campo birthDate não pode ser vazio")
 
+_user_parser.add_argument('cpf', 
+                          type=str, 
+                          required=True, 
+                          help="O campo CPF não pode ser vazio")
 
+_user_parser.add_argument('first_name', 
+                          type=str, 
+                          required=True, 
+                          help="O campo firstName não pode ser vazio")
+
+_user_parser.add_argument('last_name', 
+                          type=str, 
+                          required=True, 
+                          help="O campo lastName não pode ser vazio")
+
+_user_parser.add_argument('email', 
+                          type=str, 
+                          required=True,
+                          help="O campo email não pode ser vazio")
+
+_user_parser.add_argument('birth_Date', 
+                          type=str, 
+                          required=True, 
+                          help="O campo birthDate não pode ser vazio")
 
 
 class Users(Resource):
@@ -23,7 +39,6 @@ class Users(Resource):
 
 
 class User(Resource):
-    
     def validate_cpf(self, cpf):
         # Verifica se o CPF tem a máscara correta
         if not re.match(r'^\d{3}\.\d{3}\.\d{3}\-\d{2}$', cpf):
