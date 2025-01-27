@@ -7,29 +7,29 @@ import re
 
 _user_parser = reqparse.RequestParser()
 
-_user_parser.add_argument('cpf', 
-                          type=str, 
-                          required=True, 
+_user_parser.add_argument('cpf',
+                          type=str,
+                          required=True,
                           help="O campo CPF não pode ser vazio")
 
-_user_parser.add_argument('first_name', 
-                          type=str, 
-                          required=True, 
+_user_parser.add_argument('first_name',
+                          type=str,
+                          required=True,
                           help="O campo firstName não pode ser vazio")
 
-_user_parser.add_argument('last_name', 
-                          type=str, 
-                          required=True, 
+_user_parser.add_argument('last_name',
+                          type=str,
+                          required=True,
                           help="O campo lastName não pode ser vazio")
 
-_user_parser.add_argument('email', 
-                          type=str, 
+_user_parser.add_argument('email',
+                          type=str,
                           required=True,
                           help="O campo email não pode ser vazio")
 
-_user_parser.add_argument('birth_Date', 
-                          type=str, 
-                          required=True, 
+_user_parser.add_argument('birth_Date',
+                          type=str,
+                          required=True,
                           help="O campo birthDate não pode ser vazio")
 
 
@@ -70,16 +70,16 @@ class User(Resource):
 
         if not self.validate_cpf(data['cpf']):
             return {"message": "CPF inválido"}, 400
-        
+
         try:
-            response = UserModel(**data).save()
+            UserModel(**data).save()
             return {"message": "Usuario cadastrado com sucesso"}, 200
         except NotUniqueError:
             return {"message": "Usuário ja existe"}, 400
 
     def get(self, cpf):
         response = UserModel.objects(cpf=cpf)
-        
+
         if response:
             return jsonify(response)
         else:
