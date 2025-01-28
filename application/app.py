@@ -52,13 +52,15 @@ class User(Resource):
             return False
 
         # Valida o primeiro dígito verificador
-        sum_of_products = sum(a * b for a, b in zip(numbers[:9], range(10, 1, -1)))
+        sum_of_products = sum(
+            a * b for a, b in zip(numbers[:9], range(10, 1, -1)))
         first_digit = (sum_of_products * 10 % 11) % 10
         if numbers[9] != first_digit:
             return False
 
         # Valida o segundo dígito verificador
-        sum_of_products = sum(a * b for a, b in zip(numbers[:10], range(11, 1, -1)))
+        sum_of_products = sum(
+            a * b for a, b in zip(numbers[:10], range(11, 1, -1)))
         second_digit = (sum_of_products * 10 % 11) % 10
         if numbers[10] != second_digit:
             return False

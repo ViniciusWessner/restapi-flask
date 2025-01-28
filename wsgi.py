@@ -3,8 +3,12 @@ import os
 
 if os.getenv('FLASK_ENV') == 'development':
     app = create_app('config.DevConfig')
-else:
+if os.getenv('FLASK_ENV') == 'production':
     app = create_app('config.ProdConfig')
+if os.getenv('FLASK_ENV') == 'mock':
+    app = create_app('config.MockConfig')
+else:
+    print("Nenhuma variavel de ambiente setada")
 
 
 if __name__ == '__main__':
